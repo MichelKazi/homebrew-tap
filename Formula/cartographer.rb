@@ -15,14 +15,27 @@ class Cartographer < Formula
     bin.install "cartographer"
   end
 
+  service do
+    run opt_bin/"cartographer"
+    keep_alive false
+    log_path var/"log/cartographer.log"
+    error_log_path var/"log/cartographer.log"
+  end
+
   def caveats
     <<~EOS
       Cartographer needs Accessibility permission to work.
       It'll prompt you on first run, or you can grant it manually:
         System Settings > Privacy & Security > Accessibility
 
-      Run it with: cartographer
-      Quit it with: pkill cartographer
+      To start as a background service (and launch at login):
+        brew services start cartographer
+
+      To stop:
+        brew services stop cartographer
+
+      Or just run it directly: cartographer
+      Quit via the menu bar icon or: pkill cartographer
     EOS
   end
 
